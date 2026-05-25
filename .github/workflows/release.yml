@@ -38,7 +38,7 @@ jobs:
         with:
           files: |
             dist/*.exe
-            dist/*.yml
+            dist/latest.yml
             dist/*.blockmap
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
