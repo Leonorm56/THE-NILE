@@ -1,0 +1,46 @@
+@import "./fonts.css" layer(base);
+@import "tailwindcss" source("../src");
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans:
+    "Noto Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-noto-sans: "Noto Sans";
+  --font-turret-road: "Turret Road";
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    @apply border-neutral-200;
+  }
+
+  /* Override scrollbar styles */
+  *,
+  ::after,
+  ::before {
+    @apply /* Applied Styles */
+    [&::-webkit-scrollbar]:w-2
+    [&::-webkit-scrollbar]:h-2
+    [&::-webkit-scrollbar-track]:bg-neutral-100
+    [&::-webkit-scrollbar-thumb]:bg-neutral-300
+    dark:[&::-webkit-scrollbar-track]:bg-neutral-700
+    dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500;
+  }
+
+  /* Set cursor to pointer for all buttons and elements with role="button" */
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+}
+
+/* Override injected styles */
+body {
+  @apply font-sans text-xs bg-white dark:bg-neutral-800 dark:text-white;
+}
