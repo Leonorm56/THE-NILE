@@ -57,14 +57,14 @@ const useSpiderAccountsForm = ({ country }) => {
 
           /** Register Webview Message */
           registerWebviewMessage(webview, {
-            "get-whisker-data": () => {
-
-                action: "set-whisker-data",
-                data: getWhiskerData({
-                  account,
-                  settings: {},
-                }),
-              });
+            "get-whisker-data": (_data, reply) => {
+                reply({
+                  action: "set-whisker-data",
+                  data: getWhiskerData({
+                    account,
+                    settings: {},
+                  }),
+                });
 
               /** Restore Backup Data */
               sendHostMessage({

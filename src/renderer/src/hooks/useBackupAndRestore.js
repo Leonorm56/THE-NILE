@@ -57,17 +57,17 @@ export default function useBackupAndRestore() {
 
           /** Register Webview Message */
           registerWebviewMessage(webview, {
-            "get-whisker-data": () => {
-
-                action: "set-whisker-data",
-                data: getWhiskerData({
-                  account,
-                  settings: {
-                    allowProxies,
-                    theme,
-                  },
-                }),
-              });
+            "get-whisker-data": (_data, reply) => {
+                reply({
+                  action: "set-whisker-data",
+                  data: getWhiskerData({
+                    account,
+                    settings: {
+                      allowProxies,
+                      theme,
+                    },
+                  }),
+                });
 
               if (backup) {
                 /** Restore Backup Data */
