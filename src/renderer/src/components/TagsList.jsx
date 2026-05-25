@@ -21,7 +21,7 @@ export default function TagsList({
             "flex items-center gap-1",
             "p-2 rounded-full disabled:opacity-60",
             activeTag && activeTag.id === tag.id
-              ? "bg-orange-500 text-white"
+              ? "bg-nile-gold text-white"
               : "bg-neutral-100 dark:bg-neutral-700",
           )}
         >
@@ -30,7 +30,7 @@ export default function TagsList({
               "size-4",
               activeTag && activeTag.id === tag.id
                 ? "text-white"
-                : "text-orange-500",
+                : "text-nile-gold",
             )}
           />
           {tag.name} (

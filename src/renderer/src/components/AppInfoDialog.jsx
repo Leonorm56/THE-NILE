@@ -15,12 +15,12 @@ export default function AppInfoDialog({ currentVersion, latestVersion }) {
 
       <div className="flex flex-col gap-px">
         {/* Title and Description */}
-        <Dialog.Title className="text-xl font-bold font-turret-road text-orange-500 text-center">
+        <Dialog.Title className="text-xl font-bold font-turret-road text-nile-gold text-center">
           THE NILE
         </Dialog.Title>
 
         {/* Version */}
-        <div className="text-base font-turret-road text-orange-500 text-center font-bold">
+        <div className="text-base font-turret-road text-nile-gold text-center font-bold">
           {currentVersion}
         </div>
 

@@ -57,10 +57,10 @@ export default function useBackupAndRestore() {
 
           /** Register Webview Message */
           registerWebviewMessage(webview, {
-            "get-whisker-data": () => {
+            "get-nile-data": () => {
               /** Send Nile Data */
               sendHostMessage({
-                action: "set-whisker-data",
+                action: "set-nile-data",
                 data: getNileData({
                   account,
                   settings: {

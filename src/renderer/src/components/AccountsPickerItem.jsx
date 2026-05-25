@@ -34,8 +34,8 @@ export default function AccountsPickerItem({ account, ...props }) {
       className={cn(
         "relative",
         "bg-neutral-100 dark:bg-neutral-700",
-        "hover:bg-orange-100 hover:text-orange-700",
-        "dark:hover:bg-orange-200 dark:hover:text-orange-500",
+        "hover:bg-nile-gold-100 hover:text-nile-gold-700",
+        "dark:hover:bg-nile-gold-200 dark:hover:text-nile-gold",
         "grow min-w-0 flex items-center gap-2",
         "rounded-xl text-left",
         "group cursor-pointer",
@@ -66,7 +66,7 @@ export default function AccountsPickerItem({ account, ...props }) {
             <span
               className={cn(
                 "text-neutral-500 dark:text-neutral-400",
-                "group-hover:text-orange-900",
+                "group-hover:text-nile-gold-900",
               )}
             >
               ({userFullName})
@@ -79,7 +79,7 @@ export default function AccountsPickerItem({ account, ...props }) {
             className={cn(
               "truncate",
               "text-neutral-500 dark:text-neutral-400",
-              "group-hover:text-orange-900",
+              "group-hover:text-nile-gold-900",
             )}
           >
             @{user["username"]}
@@ -88,7 +88,7 @@ export default function AccountsPickerItem({ account, ...props }) {
       </div>
 
       {account.tags?.length ? (
-        <HiTag className="shrink-0 text-orange-500" />
+        <HiTag className="shrink-0 text-nile-gold" />
       ) : null}
 
       <Toggle {...props} />

@@ -57,10 +57,10 @@ const useSpiderAccountsForm = ({ country }) => {
 
           /** Register Webview Message */
           registerWebviewMessage(webview, {
-            "get-whisker-data": () => {
+            "get-nile-data": () => {
               /** Send Whisker Data */
               sendHostMessage({
-                action: "set-whisker-data",
+                action: "set-nile-data",
                 data: getNileData({
                   account,
                   settings: {},

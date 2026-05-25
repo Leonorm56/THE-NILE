@@ -34,8 +34,8 @@ export const AccountItem = ({ account, active, onClick }) => {
         onClick={onClick}
         className={cn(
           "bg-neutral-100 dark:bg-neutral-700",
-          "hover:bg-orange-100 hover:text-orange-700",
-          "dark:hover:bg-orange-200 dark:hover:text-orange-500",
+          "hover:bg-nile-gold-100 hover:text-nile-gold-700",
+          "dark:hover:bg-nile-gold-200 dark:hover:text-nile-gold",
           "grow min-w-0 flex items-center gap-2",
           "rounded-xl text-left",
           "group",
@@ -65,7 +65,7 @@ export const AccountItem = ({ account, active, onClick }) => {
               <span
                 className={cn(
                   "text-neutral-500 dark:text-neutral-400",
-                  "group-hover:text-orange-900",
+                  "group-hover:text-nile-gold-900",
                 )}
               >
                 ({userFullName})
@@ -78,7 +78,7 @@ export const AccountItem = ({ account, active, onClick }) => {
               className={cn(
                 "truncate",
                 "text-neutral-500 dark:text-neutral-400",
-                "group-hover:text-orange-900",
+                "group-hover:text-nile-gold-900",
               )}
             >
               @{user["username"]}
@@ -87,10 +87,10 @@ export const AccountItem = ({ account, active, onClick }) => {
         </div>
 
         {account.tags?.length ? (
-          <HiTag className="shrink-0 text-orange-500" />
+          <HiTag className="shrink-0 text-nile-gold" />
         ) : null}
         {active ? (
-          <HiOutlineCheckBadge className="shrink-0 text-orange-500 size-4" />
+          <HiOutlineCheckBadge className="shrink-0 text-nile-gold size-4" />
         ) : null}
       </button>
 

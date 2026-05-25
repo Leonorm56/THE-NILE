@@ -71,14 +71,14 @@ export default function SettingsDialog() {
       icon={HiOutlineCog6Tooth}
     >
       {/* Preferred Theme */}
-      <label className="text-orange-500 mt-2">Preferred Theme</label>
+      <label className="text-nile-gold mt-2">Preferred Theme</label>
       <div className="grid grid-cols-3 gap-2">
         {["system", "light", "dark"].map((value) => (
           <button
             onClick={() => setTheme(value)}
             key={value}
             className={cn(
-              theme === value && "text-orange-500",
+              theme === value && "text-nile-gold",
               "bg-neutral-100 dark:bg-neutral-700",
               "p-2 rounded-xl",
               "flex gap-1 items-center justify-center",
@@ -91,7 +91,7 @@ export default function SettingsDialog() {
       </div>
 
       {/* Webview Options */}
-      <label className="text-orange-500 mt-2">Webview Options</label>
+      <label className="text-nile-gold mt-2">Webview Options</label>
       <LabelToggle
         onChange={(ev) => setShowWebviewToolbar(ev.target.checked)}
         checked={showWebviewToolbar}
@@ -112,7 +112,7 @@ export default function SettingsDialog() {
         enabled they won't be used.
       </p>
 
-      <label className="text-orange-500 mt-2">Accounts</label>
+      <label className="text-nile-gold mt-2">Accounts</label>
 
       <LabelToggle
         onChange={(ev) => setShowAccountDetails(ev.target.checked)}
@@ -144,7 +144,7 @@ export default function SettingsDialog() {
       </div>
 
       {/* Extension Path */}
-      <label className="text-orange-500 mt-2">Extension Path</label>
+      <label className="text-nile-gold mt-2">Extension Path</label>
       <div className="flex gap-2">
         <Input readOnly value={extensionPath} />
 
@@ -152,8 +152,8 @@ export default function SettingsDialog() {
           onClick={openExtensionPath}
           className={cn(
             "bg-neutral-100 dark:bg-neutral-700",
-            "hover:bg-orange-100 hover:text-orange-700",
-            "dark:hover:bg-orange-200 dark:hover:text-orange-500",
+            "hover:bg-nile-gold-100 hover:text-nile-gold-700",
+            "dark:hover:bg-nile-gold-200 dark:hover:text-nile-gold",
             "flex items-center justify-center",
             "p-1 px-3 rounded-lg"
           )}
@@ -165,8 +165,8 @@ export default function SettingsDialog() {
           onClick={pickExtensionPath}
           className={cn(
             "bg-neutral-100 dark:bg-neutral-700",
-            "hover:bg-orange-100 hover:text-orange-700",
-            "dark:hover:bg-orange-200 dark:hover:text-orange-500",
+            "hover:bg-nile-gold-100 hover:text-nile-gold-700",
+            "dark:hover:bg-nile-gold-200 dark:hover:text-nile-gold",
             "flex items-center justify-center",
             "p-1 px-3 rounded-lg"
           )}
@@ -186,7 +186,7 @@ export default function SettingsDialog() {
       {/* Close Dialog */}
       <Dialog.Close
         className={cn(
-          "px-4 py-2.5 bg-orange-500 text-white rounded-xl",
+          "px-4 py-2.5 bg-nile-gold text-white rounded-xl",
           "mt-2 font-bold"
         )}
       >

@@ -58,7 +58,7 @@ export default function AccountListDialog() {
               <Dialog.Title
                 className={cn(
                   "leading-none font-bold font-turret-road",
-                  "text-lg text-orange-500",
+                  "text-lg text-nile-gold",
                 )}
               >
                 Accounts ({accounts.length})
@@ -79,14 +79,14 @@ export default function AccountListDialog() {
                 title="Add Account"
                 className={cn(
                   "shrink-0",
-                  "bg-orange-100 text-orange-700",
-                  "dark:bg-orange-200 dark:text-orange-500",
+                  "bg-nile-gold-100 text-nile-gold-700",
+                  "dark:bg-nile-gold-200 dark:text-nile-gold",
                   "flex items-center gap-2",
                   "p-2 px-3 rounded-xl text-left",
                   "font-bold",
                 )}
               >
-                <HiOutlinePlus className="size-5 text-orange-500" />
+                <HiOutlinePlus className="size-5 text-nile-gold" />
               </Dialog.Trigger>
 
               <AddAccountDialog close={closeAddAccountDialog} />

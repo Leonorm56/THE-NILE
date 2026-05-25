@@ -81,7 +81,7 @@ function TagItem({ tag }) {
               "bg-neutral-100 dark:bg-neutral-700",
             )}
           >
-            <HiTag className="size-4 text-orange-500" />
+            <HiTag className="size-4 text-nile-gold" />
             <span className="grow min-w-0 truncate">{tag.name}</span>
           </div>
         )}
@@ -177,7 +177,7 @@ export default function TagsDialog() {
         <button
           type="submit"
           className={cn(
-            "px-4 py-2 bg-orange-500 text-white rounded-xl",
+            "px-4 py-2 bg-nile-gold text-white rounded-xl",
             "font-bold shrink-0 flex items-center gap-1",
           )}
         >
@@ -217,7 +217,7 @@ export default function TagsDialog() {
       {/* Close Dialog */}
       <Dialog.Close
         className={cn(
-          "px-4 py-2.5 bg-orange-500 text-white rounded-xl",
+          "px-4 py-2.5 bg-nile-gold text-white rounded-xl",
           "mt-2 font-bold",
         )}
       >

@@ -12,7 +12,7 @@ export default memo(function ErrorFallback({ error, resetErrorBoundary }) {
       <img src={ShockedCat} className="h-28" />
 
       {/* Prompt */}
-      <h4 className="text-3xl font-turret-road text-orange-500">
+      <h4 className="text-3xl font-turret-road text-nile-gold">
         Cat-astrophe!
       </h4>
 
@@ -24,7 +24,7 @@ export default memo(function ErrorFallback({ error, resetErrorBoundary }) {
       {/* Reset Button */}
       <PrimaryButton
         onClick={resetErrorBoundary}
-        className="w-full max-w-xs px-4 py-2 text-white bg-orange-500 rounded-lg"
+        className="w-full max-w-xs px-4 py-2 text-white bg-nile-gold rounded-lg"
       >
         Reset
       </PrimaryButton>

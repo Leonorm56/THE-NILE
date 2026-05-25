@@ -108,7 +108,7 @@ export default memo(function Webview({ account, pageIndex }) {
     <div className="grow flex flex-col relative">
       {pinned && (
         <div className="grow flex flex-col gap-2 justify-center items-center p-4">
-          <h1 className="text-xl text-orange-500 max-w-full truncate">
+          <h1 className="text-xl text-nile-gold max-w-full truncate">
             {title}
           </h1>
           <p>This account is currently pinned</p>
@@ -149,7 +149,7 @@ export default memo(function Webview({ account, pageIndex }) {
               "divide-y dark:divide-neutral-700",
               "bg-white dark:bg-neutral-800 dark:text-white",
               pinned
-                ? ["border border-orange-500", "pointer-events-auto"]
+                ? ["border border-nile-gold", "pointer-events-auto"]
                 : null,
             )}
           >
@@ -159,7 +159,7 @@ export default memo(function Webview({ account, pageIndex }) {
                 <WebviewButton
                   title="Toggle Browser"
                   onClick={browser.toggle}
-                  className={browser.shown && "text-orange-500"}
+                  className={browser.shown && "text-nile-gold"}
                 >
                   <HiOutlineGlobeAlt className="size-4" />
                 </WebviewButton>
@@ -168,7 +168,7 @@ export default memo(function Webview({ account, pageIndex }) {
                 <WebviewButton
                   title="Toggle Fullscreen"
                   onClick={toggleFullScreen}
-                  className={isDesktop && "text-orange-500"}
+                  className={isDesktop && "text-nile-gold"}
                 >
                   <MdOutlineFullscreen className="size-4" />
                 </WebviewButton>
@@ -185,7 +185,7 @@ export default memo(function Webview({ account, pageIndex }) {
                 <h1
                   title={title}
                   className={cn(
-                    "text-orange-500 truncate font-bold text-center grow min-w-0",
+                    "text-nile-gold truncate font-bold text-center grow min-w-0",
                   )}
                 >
                   {title}

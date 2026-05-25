@@ -95,7 +95,7 @@ function App() {
                 }}
               >
                 <img src={Icon} className="size-48" />
-                <h1 className="text-4xl font-turret-road text-orange-500">
+                <h1 className="text-4xl font-turret-road text-nile-gold">
                   THE NILE
                 </h1>
               </div>
@@ -117,8 +117,8 @@ function App() {
                   "p-2 w-14 rounded-xl border border-transparent",
                   currentPage === pageIndex
                     ? [
-                        "border-orange-500 bg-orange-100 text-orange-500",
-                        "dark:bg-neutral-700 dark:text-orange-500",
+                        "border-nile-gold bg-nile-gold-100 text-nile-gold",
+                        "dark:bg-neutral-700 dark:text-nile-gold",
                         "font-bold",
                       ]
                     : "bg-neutral-100 dark:bg-neutral-700",
@@ -133,7 +133,7 @@ function App() {
                 className={cn(
                   "p-2 rounded-xl border border-transparent",
                   "bg-neutral-100 dark:bg-neutral-700",
-                  "hover:bg-orange-100 hover:text-orange-500",
+                  "hover:bg-nile-gold-100 hover:text-nile-gold",
                   "dark:hover:bg-neutral-600",
                 )}
                 onClick={() => closePage(pageIndex)}

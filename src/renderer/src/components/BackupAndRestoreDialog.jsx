@@ -225,9 +225,9 @@ export default function BackupAndRestoreDialog() {
           <div
             {...getRootProps()}
             className={cn(
-              "border border-dashed border-orange-500",
+              "border border-dashed border-nile-gold",
               "px-4 py-10 text-center rounded-xl",
-              "text-orange-500",
+              "text-nile-gold",
             )}
           >
             <input {...getInputProps()} />

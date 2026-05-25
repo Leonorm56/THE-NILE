@@ -143,7 +143,7 @@ export default memo(function ({ browser, account, pinned, togglePinned }) {
             <WebviewButton
               title="Toggle Pin"
               onClick={togglePinned}
-              className={pinned && "text-orange-500"}
+              className={pinned && "text-nile-gold"}
             >
               {pinned ? (
                 <RiPushpin2Fill className="size-4" />

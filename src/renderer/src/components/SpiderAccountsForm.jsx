@@ -43,7 +43,7 @@ export default function SpiderAccountsForm({ country, clearSelection }) {
       <div ref={containerRef}></div>
 
       {/* Country Information */}
-      <h2 className="text-lg flex justify-center items-center gap-2 text-orange-500 font-bold">
+      <h2 className="text-lg flex justify-center items-center gap-2 text-nile-gold font-bold">
         <span>{country.emoji}</span>
         {country.name} ({country.code})
       </h2>
@@ -62,7 +62,7 @@ export default function SpiderAccountsForm({ country, clearSelection }) {
       {/* Return to Countries */}
       <button
         onClick={clearSelection}
-        className="flex justify-center items-center gap-2 text-sm text-orange-500 hover:underline"
+        className="flex justify-center items-center gap-2 text-sm text-nile-gold hover:underline"
       >
         <HiOutlineArrowLeft className="size-4" /> Return to Countries
       </button>
@@ -78,7 +78,7 @@ export default function SpiderAccountsForm({ country, clearSelection }) {
 
       {/* Batch */}
       <div className="flex flex-col">
-        <label className="text-orange-500 text-center">
+        <label className="text-nile-gold text-center">
           Batch: <span className="font-bold">{batch}</span>
         </label>
         <Slider

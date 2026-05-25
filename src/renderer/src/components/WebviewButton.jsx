@@ -6,9 +6,9 @@ export default memo((props) => (
     {...props}
     className={cn(
       "bg-neutral-100 dark:bg-neutral-700",
-      "not-disabled:hover:bg-orange-100",
-      "not-disabled:hover:text-orange-500",
-      "dark:not-disabled:hover:bg-orange-200",
+      "not-disabled:hover:bg-nile-gold-100",
+      "not-disabled:hover:text-nile-gold",
+      "dark:not-disabled:hover:bg-nile-gold-200",
       "flex items-center justify-center",
       "p-2 rounded-full shrink-0",
       "disabled:opacity-50",

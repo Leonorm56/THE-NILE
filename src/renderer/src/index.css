@@ -9,6 +9,22 @@
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-noto-sans: "Noto Sans";
   --font-turret-road: "Turret Road";
+
+  --color-nile-gold-50: #fefcf3;
+  --color-nile-gold-100: #fdf6e0;
+  --color-nile-gold-200: #fbe9b3;
+  --color-nile-gold-300: #f8db80;
+  --color-nile-gold-400: #e8c454;
+  --color-nile-gold-500: #d4a843;
+  --color-nile-gold-600: #c99a36;
+  --color-nile-gold-700: #bf8e2a;
+  --color-nile-gold-800: #a67a1e;
+  --color-nile-gold-900: #8a6615;
+  --color-nile-gold-950: #6b4f0e;
+  --color-nile-gold: #d4a843;
+
+  --color-nile-navy: #0a1628;
+  --color-nile-blue: #2e5fff;
 }
 
 @layer base {

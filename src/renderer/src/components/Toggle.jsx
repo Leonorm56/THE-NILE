@@ -12,7 +12,7 @@ export default memo(function Toggle({ className, ...props }) {
           "relative rounded-full",
           "inline-flex h-6 w-11 items-center",
           "bg-neutral-200 dark:bg-neutral-600",
-          "peer-checked:bg-orange-500",
+          "peer-checked:bg-nile-gold",
 
           // Before
           "peer-checked:before:translate-x-6 before:translate-x-1",

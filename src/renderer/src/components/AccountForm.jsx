@@ -45,14 +45,14 @@ const TagOption = (props) => (
     {...props}
     className={cn(
       "p-2 bg-neutral-100 dark:bg-neutral-800 rounded-xl cursor-pointer",
-      "data-focus:bg-orange-500 data-focus:text-white group",
+      "data-focus:bg-nile-gold data-focus:text-white group",
       "truncate flex items-center gap-2",
     )}
   >
     <HiTag
       className={cn(
         "size-4 shrink-0",
-        "text-orange-500 group-data-active:text-white",
+        "text-nile-gold group-data-active:text-white",
       )}
     />{" "}
     {props.children}
@@ -148,7 +148,7 @@ export default memo(function AccountForm({ account, handleFormSubmit }) {
           name="proxyEnabled"
           render={({ field, fieldState }) => (
             <>
-              <label className="text-orange-500 mt-2">Proxy Options</label>
+              <label className="text-nile-gold mt-2">Proxy Options</label>
               <LabelToggle onChange={field.onChange} checked={field.value}>
                 Enable Proxy
               </LabelToggle>
@@ -244,7 +244,7 @@ export default memo(function AccountForm({ account, handleFormSubmit }) {
                       "rounded-xl",
                     )}
                   >
-                    <HiTag className={cn("size-4", "text-orange-500")} />
+                    <HiTag className={cn("size-4", "text-nile-gold")} />
                     {tags.find((item) => item.id === field.value)?.name ||
                       field.value}
                     <button

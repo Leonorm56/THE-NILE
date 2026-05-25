@@ -13,7 +13,7 @@ import AppInfoDialog from "./AppInfoDialog";
 import BackupAndRestoreDialog from "./BackupAndRestoreDialog";
 import { Dialog } from "radix-ui";
 import { FaSpider } from "react-icons/fa";
-import Icon from "../assets/images/icon.png";
+import Icon from "../assets/images/nilechain-logo.png";
 import ImportAndExportAccountsDialog from "./ImportAndExportAccountsDialog";
 import LoaderDialog from "./LoaderDialog";
 import { MdOutlineBrowserUpdated } from "react-icons/md";
@@ -57,7 +57,7 @@ export default function SideMenu() {
       {/* Account List */}
       <Dialog.Root>
         <Dialog.Trigger title="Accounts" className="p-2">
-          <HiOutlineBars3 className="size-5 text-orange-500" />
+          <HiOutlineBars3 className="size-5 text-nile-gold" />
         </Dialog.Trigger>
 
         <AccountListDialog />
@@ -66,7 +66,7 @@ export default function SideMenu() {
       {/* Tags */}
       <Dialog.Root>
         <Dialog.Trigger title="Tags" className="p-2">
-          <LuTags className="size-5 text-orange-500" />
+          <LuTags className="size-5 text-nile-gold" />
         </Dialog.Trigger>
 
         <TagsDialog />
@@ -75,7 +75,7 @@ export default function SideMenu() {
       {/* Settings */}
       <Dialog.Root>
         <Dialog.Trigger title="Settings" className="p-2">
-          <HiOutlineCog6Tooth className="size-5 text-orange-500" />
+          <HiOutlineCog6Tooth className="size-5 text-nile-gold" />
         </Dialog.Trigger>
 
         <SettingsDialog />
@@ -84,7 +84,7 @@ export default function SideMenu() {
       {/* Backup and Restore */}
       <Dialog.Root>
         <Dialog.Trigger title="Backup and Restore" className="p-2">
-          <LuDatabaseBackup className="size-5 text-orange-500" />
+          <LuDatabaseBackup className="size-5 text-nile-gold" />
         </Dialog.Trigger>
 
         <BackupAndRestoreDialog />
@@ -93,7 +93,7 @@ export default function SideMenu() {
       {/* Import and Export Accounts */}
       <Dialog.Root>
         <Dialog.Trigger title="Import and Export accounts" className="p-2">
-          <LuArrowUpDown className="size-5 text-orange-500" />
+          <LuArrowUpDown className="size-5 text-nile-gold" />
         </Dialog.Trigger>
 
         <ImportAndExportAccountsDialog />
@@ -102,7 +102,7 @@ export default function SideMenu() {
       {/* Spider */}
       <Dialog.Root>
         <Dialog.Trigger title="Spider" className="p-2">
-          <FaSpider className="size-5 text-orange-500" />
+          <FaSpider className="size-5 text-nile-gold" />
         </Dialog.Trigger>
         <SpiderProvider>
           <SpiderDialog />
@@ -115,7 +115,7 @@ export default function SideMenu() {
         className="p-2"
         onClick={toggleFullScreen}
       >
-        <HiOutlineArrowsPointingOut className="size-5 text-orange-500" />
+        <HiOutlineArrowsPointingOut className="size-5 text-nile-gold" />
       </button>
 
       {/* App Icon */}
@@ -145,7 +145,7 @@ export default function SideMenu() {
       {/* Loader */}
       <Dialog.Root>
         <Dialog.Trigger title="Loader" className="p-2">
-          <HiOutlinePuzzlePiece className="size-5 text-orange-500" />
+          <HiOutlinePuzzlePiece className="size-5 text-nile-gold" />
         </Dialog.Trigger>
 
         <LoaderDialog />
@@ -157,7 +157,7 @@ export default function SideMenu() {
         className="p-2"
         onClick={() => window.location.reload()}
       >
-        <HiOutlineArrowPath className="size-5 text-orange-500" />
+        <HiOutlineArrowPath className="size-5 text-nile-gold" />
       </button>
     </div>
   );

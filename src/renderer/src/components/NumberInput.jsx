@@ -11,7 +11,7 @@ export const NumberInput = ({
 }) => (
   <div className="flex gap-2">
     <div className="flex flex-col-reverse gap-2 grow min-w-0">
-      <label className="text-orange-500">{label}</label>
+      <label className="text-nile-gold">{label}</label>
       <Input
         type="number"
         min="1"
