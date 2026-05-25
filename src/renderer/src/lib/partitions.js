@@ -12,8 +12,8 @@ export function closeSession(partition) {
   return window.electron.ipcRenderer.invoke("close-session", partition);
 }
 
-/** Get Nile Data */
-export function getNileData({ account, settings }) {
+/** Get Whisker Data */
+export function getWhiskerData({ account, settings }) {
   const {
     title,
     partition,

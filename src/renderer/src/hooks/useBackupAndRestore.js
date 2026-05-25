@@ -1,6 +1,6 @@
 import {
   configureProxy,
-  getNileData,
+  getWhiskerData,
   registerWebviewMessage,
 } from "../lib/partitions";
 import { useCallback, useRef } from "react";
@@ -57,11 +57,10 @@ export default function useBackupAndRestore() {
 
           /** Register Webview Message */
           registerWebviewMessage(webview, {
-            "get-nile-data": () => {
-              /** Send Nile Data */
-              sendHostMessage({
-                action: "set-nile-data",
-                data: getNileData({
+            "get-whisker-data": () => {
+
+                action: "set-whisker-data",
+                data: getWhiskerData({
                   account,
                   settings: {
                     allowProxies,

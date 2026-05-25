@@ -1,4 +1,4 @@
-import { getNileData, registerWebviewMessage } from "../lib/partitions";
+import { getWhiskerData, registerWebviewMessage } from "../lib/partitions";
 import { useCallback, useRef, useState } from "react";
 
 import Spider from "../lib/Spider";
@@ -57,11 +57,10 @@ const useSpiderAccountsForm = ({ country }) => {
 
           /** Register Webview Message */
           registerWebviewMessage(webview, {
-            "get-nile-data": () => {
-              /** Send Whisker Data */
-              sendHostMessage({
-                action: "set-nile-data",
-                data: getNileData({
+            "get-whisker-data": () => {
+
+                action: "set-whisker-data",
+                data: getWhiskerData({
                   account,
                   settings: {},
                 }),

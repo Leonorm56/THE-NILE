@@ -4,7 +4,7 @@ import {
   HiOutlineArrowRight,
   HiOutlineXMark,
 } from "react-icons/hi2";
-import { getNileData, registerWebviewMessage } from "../lib/partitions";
+import { getWhiskerData, registerWebviewMessage } from "../lib/partitions";
 import { memo, useEffect } from "react";
 
 import { BsPinAngle } from "react-icons/bs";
@@ -37,9 +37,9 @@ export default memo(function ({ browser, account, pinned, togglePinned }) {
   } = useWebviewControls();
 
   /** Get Current Whisker Data */
-  const getCurrentNileData = useRefCallback(
+  const getCurrentWhiskerData = useRefCallback(
     () =>
-      getNileData({
+      getWhiskerData({
         account,
         settings: {
           allowProxies,
@@ -50,14 +50,14 @@ export default memo(function ({ browser, account, pinned, togglePinned }) {
   );
 
   /** Send Whisker Data */
-  const sendNileData = useRefCallback(() => {
+  const sendWhiskerData = useRefCallback(() => {
     callWebviewMethod((webview) =>
       webview.send("host-message", {
-        action: "set-nile-data",
-        data: getCurrentNileData(),
+        action: "set-whisker-data",
+        data: getCurrentWhiskerData(),
       }),
     );
-  }, [getCurrentNileData, callWebviewMethod]);
+  }, [getCurrentWhiskerData, callWebviewMethod]);
 
   /** Update Proxy */
   const updateProxy = useRefCallback(
@@ -107,15 +107,15 @@ export default memo(function ({ browser, account, pinned, togglePinned }) {
 
     /** IPC Message */
     registerWebviewMessage(webview, {
-      "get-nile-data": () => sendNileData(),
+      "get-whisker-data": () => sendWhiskerData(),
       "set-proxy": (data) => updateProxy(data),
       "set-telegram-init-data": (data) => updateTelegramInitData(data),
     });
-  }, [updateProxy, updateTelegramInitData, sendNileData]);
+  }, [updateProxy, updateTelegramInitData, sendWhiskerData]);
 
   /** Send Whisker Data */
   useEffect(() => {
-    sendNileData();
+    sendWhiskerData();
   }, [account, allowProxies, theme]);
 
   return (

@@ -2,3 +2,4 @@ packages:
   - "."
 
 dangerouslyAllowAllBuilds: true
+shamefullyHoist: true
