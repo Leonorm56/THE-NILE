@@ -128,7 +128,11 @@ export default function BackupAndRestoreDialog() {
             const account = app.accounts.find(
               (account) => account.partition === item.partition,
             );
-            await getOrRestoreAccountBackup(account, item.backup);
+            try {
+              await getOrRestoreAccountBackup(account, item.backup);
+            } catch (e) {
+              console.error("Account restore failed:", item.partition, e);
+            }
 
             /** Increment */
             incrementProgress();

@@ -25,6 +25,19 @@
 
   --color-nile-navy: #0a1628;
   --color-nile-blue: #2e5fff;
+
+  --color-neutral-50: #f0f4fa;
+  --color-neutral-100: #dee6f0;
+  --color-neutral-200: #c4d2e6;
+  --color-neutral-300: #a8bcd4;
+  --color-neutral-400: #8098b8;
+  --color-neutral-500: #60789c;
+  --color-neutral-600: #3a5070;
+  --color-neutral-700: #2a3d59;
+  --color-neutral-800: #192940;
+  --color-neutral-900: #0b1526;
+  --color-neutral-950: #040a14;
+  --color-neutral: #60789c;
 }
 
 @layer base {
@@ -33,7 +46,7 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    @apply border-neutral-200;
+    @apply border-neutral-300 dark:border-neutral-400;
   }
 
   /* Override scrollbar styles */
@@ -45,8 +58,8 @@
     [&::-webkit-scrollbar]:h-2
     [&::-webkit-scrollbar-track]:bg-neutral-100
     [&::-webkit-scrollbar-thumb]:bg-neutral-300
-    dark:[&::-webkit-scrollbar-track]:bg-neutral-700
-    dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500;
+    dark:[&::-webkit-scrollbar-track]:bg-neutral-800
+    dark:[&::-webkit-scrollbar-thumb]:bg-neutral-600;
   }
 
   /* Set cursor to pointer for all buttons and elements with role="button" */
@@ -57,6 +70,11 @@
 }
 
 /* Override injected styles */
+html {
+  @apply bg-neutral-50 dark:bg-neutral-900;
+}
+
 body {
-  @apply font-sans text-xs bg-white dark:bg-neutral-800 dark:text-white;
+  @apply font-sans text-xs bg-gradient-to-b from-neutral-50 to-neutral-100 text-neutral-900 dark:from-neutral-900 dark:to-neutral-950 dark:text-white;
+  background-attachment: fixed;
 }
