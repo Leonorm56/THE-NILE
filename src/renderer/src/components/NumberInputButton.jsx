@@ -9,7 +9,7 @@ export const NumberInputButton = (props) => (
       "dark:hover:bg-nile-gold-200 dark:hover:text-nile-gold",
       "disabled:opacity-50 disabled:cursor-not-allowed",
       "flex items-center justify-center",
-      "p-1 px-3 rounded-lg"
+      "p-2 rounded-xl"
     )}
   />
 );

@@ -29,6 +29,7 @@ export default memo(function Webview({ account, pageIndex }) {
     proxyPort,
     proxyUsername,
     proxyPassword,
+    proxyCountry,
   } = account;
 
   const [pinned, setPinned] = useState(false);
@@ -80,6 +81,7 @@ export default memo(function Webview({ account, pageIndex }) {
       proxyPort,
       proxyUsername,
       proxyPassword,
+      proxyCountry,
     });
   }, [
     partition,
@@ -89,6 +91,7 @@ export default memo(function Webview({ account, pageIndex }) {
     proxyPort,
     proxyUsername,
     proxyPassword,
+    proxyCountry,
     configureProxy,
   ]);
 
@@ -119,7 +122,7 @@ export default memo(function Webview({ account, pageIndex }) {
           "grow flex flex-col",
           pinned
             ? [
-                "transition-transform duration-500",
+                "transition-transform",
                 "translate-y-(--pinned-translation)",
                 "z-999 absolute inset-0",
                 "pointer-events-none",
@@ -232,7 +235,7 @@ export default memo(function Webview({ account, pageIndex }) {
                 className={cn(
                   "-translate-x-(--translate) translate-3d",
                   "grow grid w-[200%] gap-0  grid-cols-2",
-                  "transition-transform duration-500",
+                  "transition-transform",
                 )}
                 style={{
                   "--translate": browser.shown ? "50%" : "0%",

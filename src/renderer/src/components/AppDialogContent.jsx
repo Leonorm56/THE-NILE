@@ -17,7 +17,7 @@ export default memo(function ({
         <Icon className="size-10 mx-auto text-nile-gold" />
       )}
 
-      <div className="flex flex-col gap-px">
+      <div className="flex flex-col gap-1">
         <Dialog.Title className="text-xl font-bold font-turret-road text-nile-gold text-center">
           {title}
         </Dialog.Title>

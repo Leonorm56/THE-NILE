@@ -17,14 +17,14 @@ export default memo(function ErrorFallback({ error, resetErrorBoundary }) {
       </h4>
 
       {/* Message */}
-      <p className="w-full max-w-xs p-4 text-center text-red-800 bg-red-100 rounded-lg">
+      <p className="w-full max-w-xs p-4 text-center text-red-800 bg-red-100 rounded-xl">
         {error?.message || "Something went wrong"}
       </p>
 
       {/* Reset Button */}
       <PrimaryButton
         onClick={resetErrorBoundary}
-        className="w-full max-w-xs px-4 py-2 text-white bg-nile-gold rounded-lg"
+        className="w-full max-w-xs"
       >
         Reset
       </PrimaryButton>

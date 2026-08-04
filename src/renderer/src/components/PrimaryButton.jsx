@@ -10,7 +10,7 @@ export default memo(function PrimaryButton({
     <Component
       {...props}
       className={cn(
-        "px-4 py-2.5 bg-nile-gold rounded-xl",
+        "px-4 py-3 bg-nile-gold rounded-xl",
         "w-full flex justify-center items-center gap-2",
         "font-bold text-white",
         "disabled:opacity-50",

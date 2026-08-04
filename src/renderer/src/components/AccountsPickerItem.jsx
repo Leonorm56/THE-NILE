@@ -39,8 +39,8 @@ export default function AccountsPickerItem({ account, ...props }) {
         "grow min-w-0 flex items-center gap-2",
         "rounded-xl text-left",
         "group cursor-pointer",
-        "has-[input:disabled]:opacity-60",
-        showAccountDetails ? "px-2 py-1" : "px-3 py-2",
+        "has-[input:disabled]:opacity-50",
+        showAccountDetails ? "px-2 py-1" : "px-2 py-2",
       )}
     >
       {/* User  */}
@@ -52,7 +52,7 @@ export default function AccountsPickerItem({ account, ...props }) {
             loading="lazy"
           />
         ) : (
-          <div className="p-1 shrink-0">
+          <div className="size-8 shrink-0 flex items-center justify-center">
             <LiaUser className="size-5" />
           </div>
         )
@@ -88,7 +88,7 @@ export default function AccountsPickerItem({ account, ...props }) {
       </div>
 
       {account.tags?.length ? (
-        <HiTag className="shrink-0 text-nile-gold" />
+        <HiTag className="shrink-0 size-4 text-nile-gold" />
       ) : null}
 
       <Toggle {...props} />

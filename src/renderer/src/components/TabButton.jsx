@@ -45,7 +45,7 @@ export const TabButton = ({
       onClick={handleTabButtonClick}
       className={cn(
         tab.active && "bg-neutral-100 dark:bg-neutral-700",
-        "p-1.5 rounded-full shrink-0",
+        "p-1 rounded-full shrink-0",
         "flex gap-2 items-center",
         "cursor-pointer"
       )}

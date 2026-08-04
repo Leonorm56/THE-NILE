@@ -135,6 +135,9 @@ const useSpiderAccountsForm = ({ country }) => {
               const newAccount = {
                 partition,
                 title: `Spider ${account["phone"]}`,
+                /* Known at purchase time; drives the profile's timezone and
+                 * language so they agree with the proxy's exit country. */
+                proxyCountry: country?.code ?? null,
               };
 
               /* Store Account */

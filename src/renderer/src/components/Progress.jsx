@@ -8,7 +8,7 @@ const Progress = ({ current, max }) => {
         className="w-full h-2 overflow-hidden border border-neutral-300 dark:border-neutral-700 rounded-full"
       >
         <ProgressPrimitive.Indicator
-          className="bg-nile-gold h-full transition-all duration-500"
+          className="bg-nile-gold h-full transition-all"
           style={{ width: `${(current / max) * 100}%` }}
         />
       </ProgressPrimitive.Root>

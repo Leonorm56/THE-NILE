@@ -24,7 +24,7 @@ export default function SpiderCountries({
               onClick={() => selectCountry(item)}
               className={cn(
                 "flex items-center gap-2",
-                "p-2.5 text-left rounded-xl",
+                "p-3 text-left rounded-xl",
                 "bg-neutral-100 dark:bg-neutral-700",
                 "hover:bg-neutral-200 dark:hover:bg-neutral-600"
               )}

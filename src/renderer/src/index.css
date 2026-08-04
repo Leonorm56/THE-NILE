@@ -10,34 +10,52 @@
   --font-noto-sans: "Noto Sans";
   --font-turret-road: "Turret Road";
 
-  --color-nile-gold-50: #fefcf3;
-  --color-nile-gold-100: #fdf6e0;
-  --color-nile-gold-200: #fbe9b3;
-  --color-nile-gold-300: #f8db80;
-  --color-nile-gold-400: #e8c454;
-  --color-nile-gold-500: #d4a843;
-  --color-nile-gold-600: #c99a36;
-  --color-nile-gold-700: #bf8e2a;
-  --color-nile-gold-800: #a67a1e;
-  --color-nile-gold-900: #8a6615;
-  --color-nile-gold-950: #6b4f0e;
-  --color-nile-gold: #d4a843;
+  /* Single accent: a muted brass. Desaturated from the original gold so it
+   * reads as an accent rather than a highlight, and stays legible on both
+   * the light and dark neutrals below. */
+  --color-nile-gold-50: #faf8f4;
+  --color-nile-gold-100: #f2ede1;
+  --color-nile-gold-200: #e4d9c2;
+  --color-nile-gold-300: #d2c09b;
+  --color-nile-gold-400: #bfa877;
+  --color-nile-gold-500: #ab9260;
+  --color-nile-gold-600: #937c50;
+  --color-nile-gold-700: #786543;
+  --color-nile-gold-800: #5e5036;
+  --color-nile-gold-900: #473d2a;
+  --color-nile-gold-950: #2c261a;
+  --color-nile-gold: #ab9260;
 
-  --color-nile-navy: #0a1628;
-  --color-nile-blue: #2e5fff;
+  --color-nile-navy: #1b2430;
+  /* Was #2e5fff — pure neon blue. Pulled toward the neutral ramp so nothing
+   * in the UI competes with the accent. */
+  --color-nile-blue: #4a6a8f;
 
-  --color-neutral-50: #f0f4fa;
-  --color-neutral-100: #dee6f0;
-  --color-neutral-200: #c4d2e6;
-  --color-neutral-300: #a8bcd4;
-  --color-neutral-400: #8098b8;
-  --color-neutral-500: #60789c;
-  --color-neutral-600: #3a5070;
-  --color-neutral-700: #2a3d59;
-  --color-neutral-800: #192940;
-  --color-neutral-900: #0b1526;
-  --color-neutral-950: #040a14;
-  --color-neutral: #60789c;
+  /* Neutrals: same slate family, lower contrast at both ends. The darkest
+   * steps were near-black (#040a14), which made dark mode maximum contrast
+   * against white text. */
+  --color-neutral-50: #f6f7f9;
+  --color-neutral-100: #eaedf1;
+  --color-neutral-200: #d7dce3;
+  --color-neutral-300: #bcc4ce;
+  --color-neutral-400: #94a0ae;
+  --color-neutral-500: #6f7d8d;
+  --color-neutral-600: #53606f;
+  --color-neutral-700: #3d4854;
+  --color-neutral-800: #2b333d;
+  --color-neutral-900: #1e242b;
+  --color-neutral-950: #151a20;
+  --color-neutral: #6f7d8d;
+
+  /* One duration and one easing for the whole app. Every `transition-*`
+   * utility inherits these, so motion is changed here rather than per
+   * element. Was a mix of 500ms transforms and Tailwind's 150ms default. */
+  --default-transition-duration: 200ms;
+  --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Single elevation for floating surfaces (dialogs). Tiled surfaces stay
+   * flat and are separated by dividers instead. */
+  --shadow-card: 0 8px 24px rgb(0 0 0 / 0.12);
 }
 
 @layer base {

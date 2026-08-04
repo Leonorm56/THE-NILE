@@ -24,6 +24,7 @@ import { buildChromeContextMenu } from "electron-chrome-context-menu";
 import { downloadAndExtract, extractZip } from "./libs/downloader";
 import Profile from "./Profile";
 import { registerWebRequest } from "./libs/webRequest";
+import { removeProfileRecord } from "./libs/fingerprint";
 
 /**
  * Profile Map
@@ -335,6 +336,9 @@ class App {
 
     /** Remove Partition */
     await fs.rm(storagePath, { recursive: true, force: true });
+
+    /** Remove the persisted fingerprint and generated spoof script. */
+    removeProfileRecord(partition);
   }
 
   initialize() {
@@ -352,8 +356,13 @@ class App {
         optimizer.watchWindowShortcuts(window);
       });
 
-      // Start Mirror Server
-      await this.startMirrorServer();
+      // Start Mirror Server. Never let this block startup: the port may be
+      // taken by another app, and a missing mirror must not stop the window.
+      try {
+        await this.startMirrorServer();
+      } catch (e) {
+        console.error("Mirror server unavailable:", e?.message ?? e);
+      }
 
       // Register conf listener
       this.setupConfig();

@@ -155,7 +155,7 @@ export default function SettingsDialog() {
             "hover:bg-nile-gold-100 hover:text-nile-gold-700",
             "dark:hover:bg-nile-gold-200 dark:hover:text-nile-gold",
             "flex items-center justify-center",
-            "p-1 px-3 rounded-lg"
+            "p-2 rounded-xl"
           )}
         >
           <AiOutlineFolder className="size-4" />
@@ -168,7 +168,7 @@ export default function SettingsDialog() {
             "hover:bg-nile-gold-100 hover:text-nile-gold-700",
             "dark:hover:bg-nile-gold-200 dark:hover:text-nile-gold",
             "flex items-center justify-center",
-            "p-1 px-3 rounded-lg"
+            "p-2 rounded-xl"
           )}
         >
           <AiOutlineSelect className="size-4" />
@@ -186,7 +186,7 @@ export default function SettingsDialog() {
       {/* Close Dialog */}
       <Dialog.Close
         className={cn(
-          "px-4 py-2.5 bg-nile-gold text-white rounded-xl",
+          "px-4 py-3 bg-nile-gold text-white rounded-xl",
           "mt-2 font-bold"
         )}
       >

@@ -217,7 +217,7 @@ export default function TagsDialog() {
       {/* Close Dialog */}
       <Dialog.Close
         className={cn(
-          "px-4 py-2.5 bg-nile-gold text-white rounded-xl",
+          "px-4 py-3 bg-nile-gold text-white rounded-xl",
           "mt-2 font-bold",
         )}
       >
