@@ -32,7 +32,7 @@ export default function AddAccountDialog({ close }) {
 
       <Dialog.Close
         className={cn(
-          "px-4 py-3 border border-nile-gold text-nile-gold font-bold rounded-xl"
+          "px-4 py-2.5 border border-nile-gold text-nile-gold font-bold rounded-xl"
         )}
       >
         Close

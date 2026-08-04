@@ -57,14 +57,15 @@ const useSpiderAccountsForm = ({ country }) => {
 
           /** Register Webview Message */
           registerWebviewMessage(webview, {
-            "get-whisker-data": (_data, reply) => {
-                reply({
-                  action: "set-whisker-data",
-                  data: getWhiskerData({
-                    account,
-                    settings: {},
-                  }),
-                });
+            "get-whisker-data": () => {
+              /** Send Whisker Data */
+              sendHostMessage({
+                action: "set-whisker-data",
+                data: getWhiskerData({
+                  account,
+                  settings: {},
+                }),
+              });
 
               /** Restore Backup Data */
               sendHostMessage({
@@ -130,21 +131,18 @@ const useSpiderAccountsForm = ({ country }) => {
               const { account, localTelegramSession, telegramWebLocalStorage } =
                 purchase;
 
-              /* Prepare New Account */
+              /* Prepare New Whiskers Account */
               const partition = `persist:${uuid()}`;
-              const newAccount = {
+              const newWhiskersAccount = {
                 partition,
                 title: `Spider ${account["phone"]}`,
-                /* Known at purchase time; drives the profile's timezone and
-                 * language so they agree with the proxy's exit country. */
-                proxyCountry: country?.code ?? null,
               };
 
               /* Store Account */
-              addAccount(newAccount);
+              addAccount(newWhiskersAccount);
 
               /* Log Restoring Backup */
-              console.log("Restoring backup for account:", newAccount);
+              console.log("Restoring backup for account:", newWhiskersAccount);
 
               try {
                 /* Prepare Chrome Local Storage */
@@ -153,7 +151,7 @@ const useSpiderAccountsForm = ({ country }) => {
                     {
                       id: "default",
                       partition: partition,
-                      title: newAccount.title,
+                      title: newWhiskersAccount.title,
                     },
                   ],
                 };
@@ -181,7 +179,7 @@ const useSpiderAccountsForm = ({ country }) => {
                 console.log("Backup data to restore:", backupData);
 
                 /* Restore Backup */
-                await restoreAccountBackup(newAccount, backupData);
+                await restoreAccountBackup(newWhiskersAccount, backupData);
 
                 /* Launch Account */
                 launchAccount(partition);

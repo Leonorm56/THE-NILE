@@ -27,13 +27,6 @@ class Profile {
   /** @type {{proxyHost: string, proxyPort?: number, proxyUsername?: string, proxyPassword?: string}|null} */
   proxyOptions = null;
 
-  /** Consecutive proxy auth challenges answered with the stored credentials.
-   *
-   * A proxy that rejects the credentials keeps re-issuing 407, and answering
-   * it every time loops instead of surfacing anything. After the first retry
-   * the auth is cancelled so the page fails with a visible proxy error. */
-  proxyAuthFailures = 0;
-
   /** Persisted per-profile identity: { id, profilePath, fingerprint, proxy }
    * @type {object|null} */
   record = null;
@@ -160,24 +153,8 @@ class Profile {
           /** Add credentials */
           this.proxyOptions = options;
 
-          /* New endpoint or new credentials: let auth be attempted again. */
-          this.proxyAuthFailures = 0;
-
-          /** Proxy Rules
-           *
-           * No `,direct://` fallback. Chromium treats that as "use the proxy,
-           * but fall back to a direct connection if it is unreachable or
-           * refuses auth" — which quietly sends the account's traffic from the
-           * real IP. For an account bound to a specific exit, failing closed
-           * with ERR_PROXY_CONNECTION_FAILED is the safe outcome.
-           *
-           * A scheme on the host is honoured, so socks5:// proxies work;
-           * a bare host:port stays HTTP, as Chromium defaults it. */
-          const host = String(options.proxyHost).trim();
-          const scheme = /^(socks5|socks4|https?):\/\//i.exec(host);
-          const bare = scheme ? host.slice(scheme[0].length) : host;
-          const port = options.proxyPort || 80;
-          const proxyRules = `${scheme ? scheme[1].toLowerCase() + "://" : ""}${bare}:${port}`;
+          /** Proxy Rules */
+          const proxyRules = `${options.proxyHost}:${options.proxyPort || 80},direct://`;
 
           /** Set Proxy */
           await this.session.setProxy({
@@ -192,7 +169,6 @@ class Profile {
 
         /** Remove Credentials */
         this.proxyOptions = null;
-        this.proxyAuthFailures = 0;
       }
     } catch (e) {
       console.error(e);
@@ -206,12 +182,7 @@ class Profile {
      * regenerated, so the timezone stays sticky even if the proxy drops. */
     this.applyFingerprint(options?.proxyCountry);
 
-    /** Ensure the header-rewriting listeners exist for this session.
-     *
-     * Deliberately called without rules: this runs on every proxy change, and
-     * the extension owns the rule set (installed via the
-     * "update-declarative-net-rules" IPC). Passing an empty array here would
-     * wipe those rules and leak the real desktop User-Agent to game APIs. */
+    /** Configure Web Request */
     registerWebRequest(this.session);
   }
 
@@ -224,37 +195,16 @@ class Profile {
    * @param {(username?: string, password?: string) => void} callback
    */
   handleLogin(event, webContents, request, authInfo, callback) {
-    if (!authInfo?.isProxy) return;
+    if (
+      webContents.session === this.session &&
+      authInfo.isProxy &&
+      this.proxyOptions !== null
+    ) {
+      const { proxyUsername, proxyPassword } = this.proxyOptions;
 
-    /* webContents is null for requests no frame owns (service worker,
-     * net.request). Reading `.session` off it crashed the main process, and
-     * there is nothing to attribute the request to either — every profile
-     * listens on this one app-level event, so answering blind would hand this
-     * profile's credentials to whichever proxy the request was actually for.
-     * Leave it unclaimed. */
-    if (!webContents) return;
-    if (webContents.session !== this.session) return;
-    if (this.proxyOptions === null) return;
-
-    const { proxyUsername, proxyPassword } = this.proxyOptions;
-
-    event.preventDefault();
-
-    /* The same challenge coming back means the credentials were refused.
-     * Cancel rather than answer again, so the failure reaches the page as a
-     * proxy error instead of an endless auth loop. */
-    if (this.proxyAuthFailures >= 2) {
-      console.error(
-        `Proxy rejected credentials for ${this.proxyOptions.proxyHost}:${this.proxyOptions.proxyPort} ` +
-          `(user "${proxyUsername ?? ""}") — check the credentials, and whether the provider ` +
-          `requires this machine's IP to be authorized.`
-      );
-      callback();
-      return;
+      event.preventDefault();
+      callback(proxyUsername, proxyPassword);
     }
-
-    this.proxyAuthFailures += 1;
-    callback(proxyUsername, proxyPassword);
   }
 
   /**

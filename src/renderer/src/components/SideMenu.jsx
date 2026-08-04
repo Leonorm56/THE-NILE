@@ -13,7 +13,7 @@ import AppInfoDialog from "./AppInfoDialog";
 import BackupAndRestoreDialog from "./BackupAndRestoreDialog";
 import { Dialog } from "radix-ui";
 import { FaSpider } from "react-icons/fa";
-import Icon from "../assets/images/nilechain-logo.png";
+import Icon from "../assets/images/icon.png";
 import ImportAndExportAccountsDialog from "./ImportAndExportAccountsDialog";
 import LoaderDialog from "./LoaderDialog";
 import { MdOutlineBrowserUpdated } from "react-icons/md";

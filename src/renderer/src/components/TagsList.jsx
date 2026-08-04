@@ -19,7 +19,7 @@ export default function TagsList({
           }
           className={cn(
             "flex items-center gap-1",
-            "p-2 rounded-full disabled:opacity-50",
+            "p-2 rounded-full disabled:opacity-60",
             activeTag && activeTag.id === tag.id
               ? "bg-nile-gold text-white"
               : "bg-neutral-100 dark:bg-neutral-700",

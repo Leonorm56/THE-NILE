@@ -36,10 +36,6 @@ const schema = yup
     proxyPort: yup.string().nullable(),
     proxyUsername: yup.string().nullable(),
     proxyPassword: yup.string().nullable(),
-    /* Carried through so an edit does not drop the country that pins the
-     * profile's timezone. No visible control: it is set at purchase or
-     * detected from the proxy. */
-    proxyCountry: yup.string().nullable(),
     tags: yup.array().of(yup.string()).required().default([]),
   })
   .required();
@@ -83,7 +79,6 @@ export default memo(function AccountForm({ account, handleFormSubmit }) {
       proxyPort: account?.proxyPort || null,
       proxyUsername: account?.proxyUsername || null,
       proxyPassword: account?.proxyPassword || null,
-      proxyCountry: account?.proxyCountry || null,
       tags: account?.tags || [],
     },
   });
@@ -284,7 +279,7 @@ export default memo(function AccountForm({ account, handleFormSubmit }) {
 
                 {/* Dropdown Button */}
                 <ComboboxButton className="group p-1">
-                  <HiChevronDown className="size-4 group-data-open:rotate-180 transition" />
+                  <HiChevronDown className="size-4 group-data-open:rotate-180 transition duration-500" />
                 </ComboboxButton>
               </div>
 

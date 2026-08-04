@@ -44,7 +44,7 @@ export default function EditAccountDialogContent({ account, close }) {
       <button
         onClick={deleteAccount}
         className={cn(
-          "px-4 py-3 border border-red-500 text-red-500 rounded-xl",
+          "px-4 py-2.5 border border-red-500 text-red-500 rounded-xl",
           "flex items-center justify-center gap-2"
         )}
       >

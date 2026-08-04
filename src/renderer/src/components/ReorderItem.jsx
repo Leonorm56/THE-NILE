@@ -27,7 +27,7 @@ const ReorderItem = memo(function ReorderItem({
           )}
           onPointerDown={(event) => !disabled && dragControls.start(event)}
         >
-          <HiOutlineSquares2X2 className="size-4" />
+          <HiOutlineSquares2X2 className="w-4 h-4" />
         </button>
       </div>
     </Reorder.Item>

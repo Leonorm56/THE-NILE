@@ -39,7 +39,7 @@ export const AccountItem = ({ account, active, onClick }) => {
           "grow min-w-0 flex items-center gap-2",
           "rounded-xl text-left",
           "group",
-          showAccountDetails ? "px-2 py-1" : "px-2 py-2",
+          showAccountDetails ? "px-2 py-1" : "px-3 py-2",
         )}
       >
         {/* User  */}
@@ -51,7 +51,7 @@ export const AccountItem = ({ account, active, onClick }) => {
               loading="lazy"
             />
           ) : (
-            <div className="size-8 shrink-0 flex items-center justify-center">
+            <div className="p-1 shrink-0">
               <LiaUser className="size-5" />
             </div>
           )
@@ -87,10 +87,10 @@ export const AccountItem = ({ account, active, onClick }) => {
         </div>
 
         {account.tags?.length ? (
-          <HiTag className="shrink-0 size-4 text-nile-gold" />
+          <HiTag className="shrink-0 text-nile-gold" />
         ) : null}
         {active ? (
-          <HiOutlineCheckBadge className="shrink-0 size-4 text-nile-gold" />
+          <HiOutlineCheckBadge className="shrink-0 text-nile-gold size-4" />
         ) : null}
       </button>
 

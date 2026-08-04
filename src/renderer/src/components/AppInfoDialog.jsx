@@ -26,7 +26,7 @@ export default function AppInfoDialog({ currentVersion, latestVersion }) {
 
         {/* Description */}
         <Dialog.Description className="text-center text-neutral-500 dark:text-neutral-400">
-          Efficiently manage multiple automation instances
+          Efficiently manage multiple instances of the NileChain Farmer
         </Dialog.Description>
       </div>
 

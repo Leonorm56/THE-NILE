@@ -62,7 +62,7 @@ function App() {
             className={cn(
               "h-full grid grid-cols-(--grid-cols) auto-rows-(--auto-rows)",
               "-translate-y-(--current-page)",
-              "transition-transform",
+              "transition-transform duration-500",
               "divide-x dark:divide-neutral-700",
             )}
             style={{

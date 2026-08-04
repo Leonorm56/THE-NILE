@@ -57,7 +57,7 @@ export default function SpiderDialog() {
               {/* Close Dialog */}
               <Dialog.Close
                 className={cn(
-                  "px-4 py-3 text-nile-gold border border-nile-gold rounded-xl",
+                  "px-4 py-2.5 text-nile-gold border border-nile-gold rounded-xl",
                   "font-bold",
                 )}
               >
