@@ -7,6 +7,39 @@
 export const registerWebRequest = (session, rules = []) => {
   const requestMap = new Map();
 
+  /**
+   * Match a declarativeNetRequest rule against a request. Chrome semantics:
+   * a missing requestDomains means "all domains"; resourceTypes, when
+   * present, restrict by resource type.
+   * @param {chrome.declarativeNetRequest.Rule} rule
+   * @param {Electron.OnBeforeSendHeadersListenerDetails|Electron.OnHeadersReceivedListenerDetails} details
+   * @returns {boolean}
+   */
+  const matchesRule = (rule, details) => {
+    const condition = rule?.condition || {};
+
+    /* Missing requestDomains matches all hosts. */
+    if (Array.isArray(condition.requestDomains)) {
+      try {
+        if (!condition.requestDomains.includes(new URL(details.url).hostname)) {
+          return false;
+        }
+      } catch (e) {
+        return false;
+      }
+    }
+
+    /* resourceTypes, when given, restricts the match. */
+    if (Array.isArray(condition.resourceTypes)) {
+      const type = details.resourceType;
+      if (type && !condition.resourceTypes.includes(type)) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   /** onBeforeSendHeaders */
   session.webRequest.onBeforeSendHeaders(
     { urls: ["*://*/*", "ws://*/*", "wss://*/*"] },
@@ -20,9 +53,7 @@ export const registerWebRequest = (session, rules = []) => {
 
       /* Modify Headers */
       for (const rule of rules) {
-        if (
-          rule.condition.requestDomains.includes(new URL(details.url).hostname)
-        ) {
+        if (matchesRule(rule, details)) {
           for (const headerModification of rule.action.requestHeaders || []) {
             if (headerModification.operation === "set") {
               requestHeaders[headerModification.header] =
@@ -76,9 +107,7 @@ export const registerWebRequest = (session, rules = []) => {
 
       /* Modify Headers */
       for (const rule of rules) {
-        if (
-          rule.condition.requestDomains.includes(new URL(details.url).hostname)
-        ) {
+        if (matchesRule(rule, details)) {
           for (const headerModification of rule.action.responseHeaders || []) {
             if (headerModification.operation === "set") {
               responseHeaders[headerModification.header] =
