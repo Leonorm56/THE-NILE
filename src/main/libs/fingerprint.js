@@ -224,15 +224,17 @@ export const loadProfileRecord = (id, proxy) => {
       dirty = true;
     }
 
-    /* First time we learn a country, align the timezone with it — once. */
-    if (proxy?.country && !record.fingerprint.country) {
+    /* Keep the timezone aligned with the applied proxy country. */
+    if (proxy?.country) {
       const resolved = resolveCountry(proxy.country, seededRandom(id));
 
-      record.fingerprint.country = resolved.country;
-      record.fingerprint.timezone = resolved.timezone;
-      record.fingerprint.lang = resolved.lang;
-      record.fingerprint.langs = resolved.langs;
-      dirty = true;
+      if (resolved.country !== record.fingerprint.country) {
+        record.fingerprint.country = resolved.country;
+        record.fingerprint.timezone = resolved.timezone;
+        record.fingerprint.lang = resolved.lang;
+        record.fingerprint.langs = resolved.langs;
+        dirty = true;
+      }
     }
 
     if (!record.profilePath) {

@@ -109,6 +109,7 @@ export default memo(function ({ browser, account, pinned, togglePinned }) {
     registerWebviewMessage(webview, {
       "get-whisker-data": () => sendWhiskerData(),
       "set-proxy": (data) => updateProxy(data),
+      "set-proxy-country": (data) => updateProxy(data),
       "set-telegram-init-data": (data) => updateTelegramInitData(data),
     });
   }, [updateProxy, updateTelegramInitData, sendWhiskerData]);
