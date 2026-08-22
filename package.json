@@ -1,6 +1,6 @@
 {
   "name": "the-nile",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Efficiently manage multiple automation instances",
   "main": "./out/main/index.js",
   "author": "Leonorm56",
