@@ -113,6 +113,20 @@ class App {
     ipcMain.handle("setup-session", this.setupSession.bind(this));
     ipcMain.handle("remove-session", this.removeSession.bind(this));
     ipcMain.handle("configure-theme", this.configureTheme.bind(this));
+    ipcMain.handle("nile-wallet", this.handleNileWallet.bind(this));
+  }
+
+
+  /** Forward nile-wallet message to extension service worker in profile session */
+  async handleNileWallet(event, partition, action, payload) {
+    try {
+      const ses = session.fromPartition(partition);
+      const allWc = require("electron").webContents.getAllWebContents();
+      const target = allWc.find(wc => wc.session === ses && !wc.isDestroyed());
+      if (!target) return { ok: false, error: "No webview for profile" };
+      const script = 'new Promise((res,rej)=>{var t=setTimeout(()=>rej(new Error("timeout")),10000);chrome.runtime.sendMessage({action:"' + action + '",...(arguments[0]||{})},r=>{clearTimeout(t);if(chrome.runtime.lastError){rej(new Error(chrome.runtime.lastError.message))}else{res(r)}})})';
+      return await target.executeJavaScript(script, payload);
+    } catch(e) { return { ok: false, error: e.message }; }
   }
 
   /** Get App Version */
