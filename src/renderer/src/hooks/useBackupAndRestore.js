@@ -38,7 +38,7 @@ export default function useBackupAndRestore() {
         });
 
         let interval, webview;
-        const container = containerRef.current;
+        const container = document.getElementById("webviews-container");
         const initializeWebview = () => {
           webview?.remove();
           webview = createWebview(partition, extensionPath);

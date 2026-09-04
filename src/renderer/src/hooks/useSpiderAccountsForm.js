@@ -12,6 +12,7 @@ import useSettingsStore from "../store/useSettingsStore";
 import { uuid } from "../lib/utils";
 
 const useSpiderAccountsForm = ({ country }) => {
+  const abortControllerRef = useRef(null);
   const containerRef = useRef();
 
   const spiderApiKey = useAppStore((state) => state.spiderApiKey);
@@ -28,6 +29,9 @@ const useSpiderAccountsForm = ({ country }) => {
 
   const { progress, resetProgress, incrementProgress } = useProgress();
 
+  /** Maximum purchasable accounts (available stock) */
+  const maxCount = country?.quantity ?? 0;
+
   /** Calculate Total Price */
   const totalPrice = country ? (count * country.price).toFixed(2) : 0;
 
@@ -38,7 +42,7 @@ const useSpiderAccountsForm = ({ country }) => {
         const { partition } = account;
 
         let interval, webview;
-        const container = containerRef.current;
+        const container = document.getElementById("webviews-container");
         const initializeWebview = () => {
           webview?.remove();
           webview = createWebview(partition, extensionPath);
@@ -98,6 +102,9 @@ const useSpiderAccountsForm = ({ country }) => {
       twoFA = "",
       enableLocalTelegramSession = true,
     }) => {
+      const controller = new AbortController();
+      abortControllerRef.current = controller;
+
       resetProgress();
 
       const spider = new Spider(spiderApiKey);
@@ -108,10 +115,14 @@ const useSpiderAccountsForm = ({ country }) => {
       console.log("Using 2FA password:", twoFA);
 
       for (let i = 0; i < count; i += batch) {
+        if (controller.signal.aborted) break;
+
         const chunk = Array.from(
           { length: Math.min(batch, count - i) },
           async () => {
             try {
+              if (controller.signal.aborted) return;
+
               const purchase = await spider.purchaseAccount({
                 countryCode: country.code,
                 enableLocalTelegramSession,
@@ -221,8 +232,20 @@ const useSpiderAccountsForm = ({ country }) => {
     },
   });
 
+  /** Cancel purchase */
+  const cancelPurchase = () => {
+    abortControllerRef.current?.abort?.();
+    toast.success("Initiated cancellation...");
+  };
+
   /** Purchase Accounts */
   const purchaseAccounts = async () => {
+    /* Prevent purchasing above available quantity */
+    if (count > maxCount) {
+      toast.error(`Only ${maxCount} account(s) available for this country.`);
+      return;
+    }
+
     /* Log Purchase Details */
     console.log("Purchasing", count, "accounts for country", country.code);
 
@@ -258,6 +281,7 @@ const useSpiderAccountsForm = ({ country }) => {
     setEnableLocalTelegramSession,
 
     totalPrice,
+    maxCount,
 
     country,
 
@@ -268,6 +292,7 @@ const useSpiderAccountsForm = ({ country }) => {
     incrementProgress,
     restoreAccountBackup,
     purchaseAccounts,
+    cancelPurchase,
   };
 };
 

@@ -120,12 +120,24 @@ class App {
   /** Forward nile-wallet message to extension service worker in profile session */
   async handleNileWallet(event, partition, action, payload) {
     try {
-      const ses = session.fromPartition(partition);
-      const allWc = require("electron").webContents.getAllWebContents();
-      const target = allWc.find(wc => wc.session === ses && !wc.isDestroyed());
-      if (!target) return { ok: false, error: "No webview for profile" };
-      const script = 'new Promise((res,rej)=>{var t=setTimeout(()=>rej(new Error("timeout")),10000);chrome.runtime.sendMessage({action:"' + action + '",...(arguments[0]||{})},r=>{clearTimeout(t);if(chrome.runtime.lastError){rej(new Error(chrome.runtime.lastError.message))}else{res(r)}})})';
-      return await target.executeJavaScript(script, payload);
+      let target;
+      if (partition) {
+        const ses = session.fromPartition(partition);
+        const allWc = require("electron").webContents.getAllWebContents();
+        target = allWc.find(wc => wc.session === ses && !wc.isDestroyed());
+      } else {
+        // No partition - find any non-main-frame webview
+        const allWc = require("electron").webContents.getAllWebContents();
+        target = allWc.find(wc => !wc.isDestroyed() && !wc.isMainFrame());
+      }
+      if (!target) {
+        target = event.sender;
+      }
+      // Use window.postMessage bridge: the isolated content script listens
+      // for nile-wallet-request messages and forwards to chrome.runtime.sendMessage
+      const msgId = "nw-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8);
+      const bridgeScript = 'new Promise((res,rej)=>{var t=setTimeout(()=>rej(new Error("bridge-timeout")),15000);window.addEventListener("message",function h(ev){if(ev.source!==window||ev.data?.type!=="nile-wallet-response"||ev.data?.id!=="' + msgId + '")return;window.removeEventListener("message",h);clearTimeout(t);res(ev.data.result)});window.postMessage({type:"nile-wallet-request",id:"' + msgId + '",action:' + JSON.stringify(action) + ',payload:' + JSON.stringify(payload || {}) + '},"*")})';
+      return await target.executeJavaScript(bridgeScript);
     } catch(e) { return { ok: false, error: e.message }; }
   }
 

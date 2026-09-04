@@ -17,6 +17,10 @@ export default function SpiderDialog() {
     spiderApiKey,
     searchTerm,
     setSearchTerm,
+    sortKey,
+    setSortKey,
+    sortDir,
+    setSortDir,
     selectedCountry,
     setSelectedCountry,
     countriesQuery,
@@ -50,6 +54,10 @@ export default function SpiderDialog() {
                   filteredCountries={filteredCountries}
                   searchTerm={searchTerm}
                   setSearchTerm={setSearchTerm}
+                  sortKey={sortKey}
+                  setSortKey={setSortKey}
+                  sortDir={sortDir}
+                  setSortDir={setSortDir}
                 />
               ) : countriesQuery.isPending ? (
                 <p className="text-center">Loading countries...</p>

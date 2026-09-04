@@ -10,6 +10,8 @@ import { useQuery } from "@tanstack/react-query";
 const useSpiderCore = () => {
   const spiderApiKey = useAppStore((state) => state.spiderApiKey);
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortKey, setSortKey] = useState("name");
+  const [sortDir, setSortDir] = useState("asc");
   const [selectedCountry, setSelectedCountry] = useState(null);
 
   /** Enabled */
@@ -41,26 +43,32 @@ const useSpiderCore = () => {
   /* All Countries */
   const allCountries = useMemo(() => {
     try {
-      return countriesQuery.data
-        ? Object.entries(countriesQuery.data.countries).reduce(
-            (result, [group, list]) =>
-              result.concat(
-                Object.entries(list).map(([code, price]) => {
-                  const country = getCountryData(code);
-                  const emoji = getEmojiFlag(code);
-                  const name = country?.name || code;
-                  return {
-                    code,
-                    price: parseFloat(price),
-                    emoji,
-                    name,
-                    group,
-                  };
-                }),
-              ),
-            [],
-          )
-        : [];
+      if (!countriesQuery.data) return [];
+
+      /* Quantities are returned under the misspelled "cuantity" key */
+      const quantities =
+        countriesQuery.data.cuantity || countriesQuery.data.quantity || {};
+
+      return Object.entries(countriesQuery.data.countries).reduce(
+        (result, [group, list]) =>
+          result.concat(
+            Object.entries(list).map(([code, price]) => {
+              const country = getCountryData(code);
+              const emoji = getEmojiFlag(code);
+              const name = country?.name || code;
+              const quantity = quantities?.[group]?.[code] ?? 0;
+              return {
+                code,
+                price: parseFloat(price),
+                quantity,
+                emoji,
+                name,
+                group,
+              };
+            }),
+          ),
+        [],
+      );
     } catch (e) {
       console.error("Error processing countries:", e);
       return [];
@@ -69,20 +77,31 @@ const useSpiderCore = () => {
 
   /* Available Countries (Group 1) */
   const availableCountries = useMemo(() => {
-    return allCountries
-      .filter((item) => item.group === "1")
-      .sort((a, b) => a.name.localeCompare(b.name));
+    return allCountries.filter((item) => item.group === "1");
   }, [allCountries]);
 
-  /* Filtered Countries */
+  /* Filtered & Sorted Countries */
   const filteredCountries = useMemo(() => {
-    return availableCountries.filter((item) =>
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
-  }, [availableCountries, searchTerm]);
+    const term = searchTerm.toLowerCase();
+    const direction = sortDir === "desc" ? -1 : 1;
+
+    return availableCountries
+      .filter((item) => item.name.toLowerCase().includes(term))
+      .sort((a, b) => {
+        const comparison =
+          sortKey === "price"
+            ? a.price - b.price
+            : a.name.localeCompare(b.name);
+        return comparison * direction;
+      });
+  }, [availableCountries, searchTerm, sortKey, sortDir]);
 
   /** Select Country */
   const selectCountry = (item) => {
+    if (item.quantity <= 0) {
+      toast.error("This country is out of stock.");
+      return;
+    }
     if (item.price > balance) {
       toast.error("Insufficient balance for this country.");
       return;
@@ -94,6 +113,10 @@ const useSpiderCore = () => {
     spiderApiKey,
     searchTerm,
     setSearchTerm,
+    sortKey,
+    setSortKey,
+    sortDir,
+    setSortDir,
 
     selectedCountry,
     setSelectedCountry,

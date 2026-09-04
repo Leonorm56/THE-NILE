@@ -1,16 +1,25 @@
 import { HiOutlineTrash } from "react-icons/hi2";
 import { LuUserRoundPen } from "react-icons/lu";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 import AccountForm from "./AccountForm";
 import AppDialogContent from "./AppDialogContent";
+import TelegramUserCard from "./TelegramUserCard";
 import useAppStore from "../store/useAppStore";
-import { cn } from "../lib/utils";
+import { cn, extractInitDataUnsafe } from "../lib/utils";
 
 export default function EditAccountDialogContent({ account, close }) {
   const updateAccount = useAppStore((state) => state.updateAccount);
   const removeAccount = useAppStore((state) => state.removeAccount);
   const closeAccount = useAppStore((state) => state.closeAccount);
+
+  /** Telegram User */
+  const user = useMemo(() => {
+    if (account.telegramInitData) {
+      return extractInitDataUnsafe(account.telegramInitData)["user"];
+    }
+    return null;
+  }, [account.telegramInitData]);
 
   /** Save Account Data */
   const saveAccountData = useCallback(
@@ -37,6 +46,8 @@ export default function EditAccountDialogContent({ account, close }) {
       description={"Update Account Data"}
       icon={LuUserRoundPen}
     >
+      {user ? <TelegramUserCard user={user} /> : null}
+
       <AccountForm account={account} handleFormSubmit={saveAccountData} />
 
       <p className="text-center text-neutral-500 dark:text-neutral-400">OR</p>

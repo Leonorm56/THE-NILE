@@ -96,6 +96,15 @@ export default memo(function AccountForm({ account, handleFormSubmit }) {
       tag.name.toLowerCase().includes(query.toLowerCase()),
   );
 
+  /** Clear all proxy field values at once */
+  const clearProxy = () => {
+    form.setValue("proxyEnabled", false);
+    form.setValue("proxyHost", null);
+    form.setValue("proxyPort", null);
+    form.setValue("proxyUsername", null);
+    form.setValue("proxyPassword", null);
+  };
+
   const handleTagAdd = (tag) => {
     if (!tag) return;
     const name = tag.name.trim();
@@ -148,7 +157,20 @@ export default memo(function AccountForm({ account, handleFormSubmit }) {
           name="proxyEnabled"
           render={({ field, fieldState }) => (
             <>
-              <label className="text-nile-gold mt-2">Proxy Options</label>
+              <div className="flex items-center justify-between mt-2">
+                <label className="text-nile-gold">Proxy Options</label>
+                <button
+                  type="button"
+                  onClick={clearProxy}
+                  className={cn(
+                    "flex items-center gap-1",
+                    "text-red-500 hover:text-red-700",
+                  )}
+                >
+                  <HiXMark className="size-4" />
+                  Clear Proxy
+                </button>
+              </div>
               <LabelToggle onChange={field.onChange} checked={field.value}>
                 Enable Proxy
               </LabelToggle>

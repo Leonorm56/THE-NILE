@@ -59,6 +59,17 @@ export default memo(function ({ browser, account, pinned, togglePinned }) {
     );
   }, [getCurrentWhiskerData, callWebviewMethod]);
 
+  /** Request the active account's telegram init data from the extension, so
+   * profile picture/username show up even when the account was added in the
+   * host app and the extension only captured the data after launch. */
+  const requestAccountData = useRefCallback(() => {
+    callWebviewMethod((webview) =>
+      webview.send("host-message", {
+        action: "get-account-data",
+      }),
+    );
+  }, [callWebviewMethod]);
+
   /** Update Proxy */
   const updateProxy = useRefCallback(
     (data) => {
@@ -107,12 +118,16 @@ export default memo(function ({ browser, account, pinned, togglePinned }) {
 
     /** IPC Message */
     registerWebviewMessage(webview, {
-      "get-whisker-data": () => sendWhiskerData(),
+      "get-whisker-data": () => {
+        sendWhiskerData();
+        requestAccountData();
+      },
       "set-proxy": (data) => updateProxy(data),
       "set-proxy-country": (data) => updateProxy(data),
       "set-telegram-init-data": (data) => updateTelegramInitData(data),
+      "response-get-account-data": (data) => updateTelegramInitData(data),
     });
-  }, [updateProxy, updateTelegramInitData, sendWhiskerData]);
+  }, [updateProxy, updateTelegramInitData, sendWhiskerData, requestAccountData]);
 
   /** Send Whisker Data */
   useEffect(() => {
