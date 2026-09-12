@@ -8,16 +8,23 @@ import { useCallback, useRef } from "react";
 import { createWebview } from "../lib/utils";
 import useSettingsStore from "../store/useSettingsStore";
 
+const BACKUP_TIMEOUT_MS = 60 * 1000;
+
 export default function useBackupAndRestore() {
   const containerRef = useRef();
   const theme = useSettingsStore((state) => state.theme);
   const allowProxies = useSettingsStore((state) => state.allowProxies);
   const extensionPath = useSettingsStore((state) => state.extensionPath);
 
-  /** Get or Restore Account Backup */
+  /** Get or restore an account backup through the extension. */
   const getOrRestoreAccountBackup = useCallback(
     (account, backup = null) =>
-      new Promise(async (resolve, reject) => {
+      new Promise((resolve, reject) => {
+        if (!account?.partition) {
+          reject(new Error("The backup does not contain a valid account."));
+          return;
+        }
+
         const {
           partition,
           proxyEnabled,
@@ -26,88 +33,88 @@ export default function useBackupAndRestore() {
           proxyUsername,
           proxyPassword,
         } = account;
+        const container =
+          document.getElementById("webviews-container") || containerRef.current;
 
-        /** Configure Proxy */
-        await configureProxy(partition, {
-          allowProxies,
-          proxyEnabled,
-          proxyHost,
-          proxyPort,
-          proxyUsername,
-          proxyPassword,
-        });
+        if (!container) {
+          reject(new Error("Unable to create the backup webview container."));
+          return;
+        }
 
-        let interval, webview;
-        const container = document.getElementById("webviews-container");
-        const initializeWebview = () => {
+        let webview;
+        let timeout;
+        let settled = false;
+
+        const cleanup = () => {
+          clearTimeout(timeout);
           webview?.remove();
-          webview = createWebview(partition, extensionPath);
-
-          /** Send Host Message */
-          const sendHostMessage = (data) => {
-            webview.send("host-message", data);
-          };
-
-          /** Handle Response */
-          const handleResponse = (data) => {
-            webview.remove();
-            clearInterval(interval);
-            resolve(data);
-          };
-
-          /** Register Webview Message */
-          registerWebviewMessage(webview, {
-            "get-whisker-data": () => {
-              /** Send Whisker Data */
-              sendHostMessage({
-                action: "set-whisker-data",
-                data: getWhiskerData({
-                  account,
-                  settings: {
-                    allowProxies,
-                    theme,
-                  },
-                }),
-              });
-
-              if (backup) {
-                /** Restore Backup Data */
-                sendHostMessage({
-                  action: "restore-backup-data",
-                  data: backup,
-                });
-              } else {
-                /** Request for Backup Data */
-                sendHostMessage({
-                  action: "get-backup-data",
-                });
-              }
-            },
-            "set-proxy": (data) => {
-              configureProxy(partition, {
-                ...data,
-                allowProxies,
-              });
-            },
-            "response-get-backup-data": handleResponse,
-            "response-restore-backup-data": handleResponse,
-          });
-
-          /** Append to container */
-          container.appendChild(webview);
+        };
+        const finish = (callback, value) => {
+          if (settled) return;
+          settled = true;
+          cleanup();
+          callback(value);
         };
 
-        /** Set Interval */
-        interval = setInterval(initializeWebview, 30 * 1000);
+        const initializeWebview = async () => {
+          try {
+            await configureProxy(partition, {
+              allowProxies,
+              proxyEnabled,
+              proxyHost,
+              proxyPort,
+              proxyUsername,
+              proxyPassword,
+            });
 
-        /** Initialize */
+            webview = createWebview(partition, extensionPath);
+            const sendHostMessage = (data) =>
+              webview.send("host-message", data);
+            const handleResponse = (data) => finish(resolve, data);
+
+            registerWebviewMessage(webview, {
+              "get-whisker-data": () => {
+                sendHostMessage({
+                  action: "set-whisker-data",
+                  data: getWhiskerData({
+                    account,
+                    settings: { allowProxies, theme },
+                  }),
+                });
+                sendHostMessage(
+                  backup
+                    ? { action: "restore-backup-data", data: backup }
+                    : { action: "get-backup-data" },
+                );
+              },
+              "set-proxy": (data) => {
+                configureProxy(partition, { ...data, allowProxies }).catch(
+                  (error) => console.error("Failed to update proxy:", error),
+                );
+              },
+              "response-get-backup-data": handleResponse,
+              "response-restore-backup-data": handleResponse,
+            });
+
+            container.appendChild(webview);
+          } catch (error) {
+            finish(reject, error);
+          }
+        };
+
+        timeout = setTimeout(() => {
+          finish(
+            reject,
+            new Error(
+              "The extension did not respond while processing the backup.",
+            ),
+          );
+        }, BACKUP_TIMEOUT_MS);
+
         initializeWebview();
       }),
     [theme, allowProxies, extensionPath],
   );
 
-  return {
-    containerRef,
-    getOrRestoreAccountBackup,
-  };
+  return { containerRef, getOrRestoreAccountBackup };
 }

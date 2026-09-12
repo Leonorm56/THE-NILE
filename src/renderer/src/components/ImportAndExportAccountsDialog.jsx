@@ -90,9 +90,9 @@ export default function ImportAndExportAccountsDialog() {
   const exportAccounts = useCallback(async () => {
     toast
       .promise(
-        getExportData().then((data) => {
-          saveBackupFile(data);
-        }),
+        getExportData()
+          .then(saveBackupFile)
+          .finally(() => setIsProcessing(false)),
         {
           loading: "Exporting Accounts...",
           error: "Failed to Export Accounts!",
@@ -106,6 +106,14 @@ export default function ImportAndExportAccountsDialog() {
 
   /** Import Accounts */
   const importAccountsBackup = async (data) => {
+    if (
+      !data ||
+      !Array.isArray(data.accounts) ||
+      data.accounts.some((item) => !item?.account?.partition)
+    ) {
+      throw new Error("The selected file is not a valid accounts export.");
+    }
+
     /** Close opened accounts */
     closeAllAccounts();
 
@@ -156,7 +164,8 @@ export default function ImportAndExportAccountsDialog() {
             })
             .catch((e) => {
               console.error(e);
-            });
+            })
+            .finally(() => setIsProcessing(false));
         } catch (err) {
           toast.error("Invalid JSON file!");
         }

@@ -94,9 +94,9 @@ export default function BackupAndRestoreDialog() {
   const backupData = useCallback(async () => {
     toast
       .promise(
-        getBackupData().then((data) => {
-          saveBackupFile(data);
-        }),
+        getBackupData()
+          .then(saveBackupFile)
+          .finally(() => setIsProcessing(false)),
         {
           loading: "Creating Backup...",
           error: "Failed to Create Backup!",
@@ -111,6 +111,15 @@ export default function BackupAndRestoreDialog() {
   /** Restore Backup */
   const restoreBackup = useCallback(
     async (data) => {
+      if (
+        !data ||
+        !Array.isArray(data.backups) ||
+        !data.app ||
+        !Array.isArray(data.app.accounts)
+      ) {
+        throw new Error("The selected file is not a valid full backup.");
+      }
+
       /** Close opened accounts */
       closeAllAccounts();
 
@@ -171,7 +180,8 @@ export default function BackupAndRestoreDialog() {
             })
             .catch((e) => {
               console.error(e);
-            });
+            })
+            .finally(() => setIsProcessing(false));
         } catch (err) {
           toast.error("Invalid JSON file!");
         }

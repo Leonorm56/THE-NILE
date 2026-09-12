@@ -195,6 +195,11 @@ class Profile {
    * @param {(username?: string, password?: string) => void} callback
    */
   handleLogin(event, webContents, request, authInfo, callback) {
+    // webContents is null for auth requests that do not originate from a
+    // frame (e.g. extension service-worker traffic). They can't be matched
+    // to a profile session, so ignore them instead of crashing on `.session`.
+    if (!webContents || webContents.isDestroyed()) return;
+
     if (
       webContents.session === this.session &&
       authInfo.isProxy &&
